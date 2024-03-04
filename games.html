@@ -1,0 +1,78 @@
+<!-- games.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carleton Math Games - Games</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+    <header>
+        <h1>Carleton Study Assist</h1>
+    </header>
+    <main>
+        <section id="games-content">
+            <h2>Games Page</h2>
+                <h2>Calculus Math Challenge</h2>
+    <form id="math-question" method="post" action="{% url 'game_answer' %}">
+        <p>Compute the derivative of the function f(x) = 3x^2 + 2x + 1.</p>
+        <div class="choices">
+            <input type="radio" id="choice1" name="answer" value="a">
+            <label for="choice1">a) 6x + 2</label><br>
+
+            <input type="radio" id="choice2" name="answer" value="b">
+            <label for="choice2">b) 3x^2</label><br>
+
+            <input type="radio" id="choice3" name="answer" value="c">
+            <label for="choice3">c) 6x^2 + 2</label><br>
+
+            <input type="radio" id="choice4" name="answer" value="d">
+            <label for="choice4">d) 9x + 2</label><br>
+        </div>
+        <button type="submit">Submit Answer</button>
+    </form>
+    <div id="result"></div>
+            <!-- Content for the Games page goes here -->
+        </section>
+    </main>
+    <footer>
+        <p>&copy; {{ current_year }} Carleton University Math Department</p>
+    </footer>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            // Get the form and result elements
+            const form = document.getElementById("math-question");
+            const resultDiv = document.getElementById("result");
+
+            // Add event listener to the form
+            form.addEventListener("submit", function (event) {
+                event.preventDefault(); // Prevent the default form submission
+
+                // Get the selected answer
+                const selectedAnswer = document.querySelector('input[name="answer"]:checked');
+
+                if (selectedAnswer) {
+                    // Process the answer (You may want to send it to the server for validation)
+                    const answerValue = selectedAnswer.value;
+
+                    // Display the result
+                    resultDiv.innerHTML = `<p>Your answer is: ${answerValue}</p>`;
+
+                    // You can also add logic to check the correct answer and provide feedback
+                    // For example:
+                    if (answerValue === "a") {
+                         resultDiv.innerHTML += "<p>Correct!</p>";
+                     } else {
+                         resultDiv.innerHTML += "<p>Incorrect. Try again!</p>";
+                     }
+                } else {
+                    // Display an error message if no answer is selected
+                    resultDiv.innerHTML = "<p>Please select an answer.</p>";
+                }
+            });
+        });
+    src="{% static 'js/main.js' %}"
+    </script>
+</body>
+</html>
