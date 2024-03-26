@@ -1,78 +1,103 @@
-<!-- games.html -->
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Carleton Math Games - Games</title>
-    <link rel="stylesheet" href="{% static 'css/style.css' %}">
-</head>
-<body>
-    <header>
-        <h1>Carleton Study Assist</h1>
-    </header>
-    <main>
-        <section id="games-content">
-            <h2>Games Page</h2>
-                <h2>Calculus Math Challenge</h2>
-    <form id="math-question" method="post" action="{% url 'game_answer' %}">
-        <p>Compute the derivative of the function f(x) = 3x^2 + 2x + 1.</p>
-        <div class="choices">
-            <input type="radio" id="choice1" name="answer" value="a">
-            <label for="choice1">a) 6x + 2</label><br>
+{% extends "base.html" %}
 
-            <input type="radio" id="choice2" name="answer" value="b">
-            <label for="choice2">b) 3x^2</label><br>
+{% block title %}
+  Math Games
+{% endblock %}
 
-            <input type="radio" id="choice3" name="answer" value="c">
-            <label for="choice3">c) 6x^2 + 2</label><br>
+{% block content %}
+<div id="math-games-content" class="jumbotron">
+  <h1 class="display-4">Welcome to Math Games!</h1>
+  <p class="lead">Choose from a variety of fun and educational math games to sharpen your skills.</p>
+  <hr class="my-4">
+  <p>Start playing now!</p>
+  <a id="play-now-btn" class="btn btn-primary btn-lg" href="#" role="button">Play Now</a>
+</div>
 
-            <input type="radio" id="choice4" name="answer" value="d">
-            <label for="choice4">d) 9x + 2</label><br>
+<div id="math-game" style="display: none;">
+  <div class="card">
+    <div class="card-header">
+      <h5 class="card-title">Calculus Problem</h5>
+    </div>
+    <div class="card-body">
+      <p class="card-text">Find the derivative of the function f(x) = 3x^2 + 2x + 1.</p>
+      <form>
+        <div class="form-group">
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="answer" id="optionA" value="optionA">
+            <label class="form-check-label" for="optionA">
+              A) 3x^2
+            </label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="answer" id="optionB" value="optionB">
+            <label class="form-check-label" for="optionB">
+              B) 6x + 2
+            </label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="answer" id="optionC" value="optionC">
+            <label class="form-check-label" for="optionC">
+              C) 9x + 2
+            </label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="answer" id="optionD" value="optionD">
+            <label class="form-check-label" for="optionD">
+              D) 6x^2 + 2
+            </label>
+          </div>
         </div>
-        <button type="submit">Submit Answer</button>
-    </form>
-    <div id="result"></div>
-            <!-- Content for the Games page goes here -->
-        </section>
-    </main>
-    <footer>
-        <p>&copy; {{ current_year }} Carleton University Math Department</p>
-    </footer>
-    <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            // Get the form and result elements
-            const form = document.getElementById("math-question");
-            const resultDiv = document.getElementById("result");
+        <button type="button" class="btn btn-primary" id="submit-btn">Submit</button>
+        <br/>
+        <br/>
+        <button type="button" class="btn btn-primary" id="next-btn" style="display: none;">Next</button>
+      </form>
+    </div>
+  </div>
+</div>
 
-            // Add event listener to the form
-            form.addEventListener("submit", function (event) {
-                event.preventDefault(); // Prevent the default form submission
+<!-- Placeholder to display points -->
+<p id="points" style="display: none;"></p>
 
-                // Get the selected answer
-                const selectedAnswer = document.querySelector('input[name="answer"]:checked');
+<script>
+// Initialize points variable
+var points = 0;
 
-                if (selectedAnswer) {
-                    // Process the answer (You may want to send it to the server for validation)
-                    const answerValue = selectedAnswer.value;
+document.getElementById("play-now-btn").addEventListener("click", function() {
+  // Hide the math-games-content div
+  document.getElementById("math-games-content").style.display = "none";
 
-                    // Display the result
-                    resultDiv.innerHTML = `<p>Your answer is: ${answerValue}</p>`;
+  // Show the math-game div
+  document.getElementById("math-game").style.display = "block";
+});
 
-                    // You can also add logic to check the correct answer and provide feedback
-                    // For example:
-                    if (answerValue === "a") {
-                         resultDiv.innerHTML += "<p>Correct!</p>";
-                     } else {
-                         resultDiv.innerHTML += "<p>Incorrect. Try again!</p>";
-                     }
-                } else {
-                    // Display an error message if no answer is selected
-                    resultDiv.innerHTML = "<p>Please select an answer.</p>";
-                }
-            });
-        });
-    src="{% static 'js/main.js' %}"
-    </script>
-</body>
-</html>
+document.getElementById("submit-btn").addEventListener("click", function() {
+  var answer = document.querySelector('input[name="answer"]:checked').value;
+  if (answer === "optionB") {
+    // If answer is correct, increase points
+    points += 10; // You can adjust the points earned as needed
+    alert("Correct! You found the derivative of the function.");
+    document.getElementById("next-btn").style.display = "block";
+    // Call function to display points
+    displayPoints();
+  } else {
+    alert("Incorrect. Please try again.");
+    document.getElementById("next-btn").style.display = "none";
+  }
+});
+
+document.getElementById("next-btn").addEventListener("click", function() {
+  // Add logic to display the next question or game
+
+  alert("Next question of game will be displayed.");
+});
+
+// Function to display points
+function displayPoints() {
+  // Show the points element
+  document.getElementById("points").style.display = "block";
+  // Update the points text
+  document.getElementById("points").innerText = "Points: " + points;
+}
+</script>
+{% endblock %}
