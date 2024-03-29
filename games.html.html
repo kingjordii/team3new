@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+Math Games
+
+{% block content %}
+<div class="jumbotron">
+    <h1 class="display-4">Welcome to Math Games!</h1>
+    <p class="lead">Choose from a variety of fun and educational math games to sharpen your skills.</p>
+    <hr class="my-4">
+    <p>Select a game to play:</p>
+    <div class="list-group">
+        <a href="{% url 'static_math_challenge' %}" class="list-group-item list-group-item-action">Calculus Challenge</a>
+        <a href="{% url 'algebra_challenge' %}" class="list-group-item list-group-item-action">Algebra Challenge</a>
+        <a href="{% url 'geometry_challenge' %}" class="list-group-item list-group-item-action">Geometry Challenge</a>
+        <a href="{% url 'trigonometry_challenge' %}" class="list-group-item list-group-item-action">Trigonometry Challenge</a>
+        <a href="{% url 'probability_challenge' %}" class="list-group-item list-group-item-action">Probability Challenge</a>
+    </div>
+</div>
